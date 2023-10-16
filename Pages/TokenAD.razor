@@ -1,0 +1,26 @@
+@page "/token-a-d"
+
+@attribute [Authorize]
+
+<PageTitle>Report Invoke Info </PageTitle>
+@if (embedToken is null)
+{
+    <label>Retrieving report information...</label>
+    <br />
+}
+
+@if (gotReportInfo)
+{
+  <label style="font-weight:700">Id:</label>
+    <span>@embedToken?.Id</span>
+    <br/>
+    <label style="font-weight:700">Name:</label>
+    <span>@embedToken?.Name</span>
+    <br/>
+    <label style="font-weight:700">Embed URL:</label>
+    <span>@embedToken?.EmbedUrl</span>
+    <br/>
+    <label style="font-weight:700">Token:</label>
+    <span>@embedToken?.Token</span>
+}
+

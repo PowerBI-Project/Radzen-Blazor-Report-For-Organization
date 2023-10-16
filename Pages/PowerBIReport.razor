@@ -1,0 +1,15 @@
+@page "/power-b-i-report"
+
+<PageTitle>PowerBIReport</PageTitle>
+<RadzenRow>
+    <RadzenColumn Size="6">
+        <RadzenText Text="PowerBIReport" TextStyle="TextStyle.H3" TagName="TagName.H1" />
+    </RadzenColumn>
+</RadzenRow>
+@if (embedToken is null)
+{
+    <label>Retrieving report information...</label>
+    <br />
+}
+
+<div id="embed-container" style="height: 600px;"></div>
