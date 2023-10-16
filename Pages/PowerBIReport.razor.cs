@@ -34,7 +34,7 @@ namespace PowerBIBlazor.Pages
         [Inject]
         protected PowerBIService PowerBIService { get; set; }
 
-        private EmbeddedReportViewModel embedToken { get;set; }
+        private EmbeddedReportViewModel EmbedToken { get;set; }
 
         private bool gotReportInfo = false;
 
@@ -44,12 +44,12 @@ namespace PowerBIBlazor.Pages
         {
             try
             {
-                embedToken = await PowerBIService.GetEmbedTokenAsync();
+                EmbedToken = await PowerBIService.GetEmbedTokenAsync();
                 await JSRuntime.InvokeVoidAsync("embedReport",
                     "embed-container",
-                    embedToken?.Id,
-                    embedToken?.EmbedUrl,
-                    embedToken?.Token).ConfigureAwait(false);
+                    EmbedToken?.Id,
+                    EmbedToken?.EmbedUrl,
+                    EmbedToken?.Token);
 
             }
             catch (Exception ex)

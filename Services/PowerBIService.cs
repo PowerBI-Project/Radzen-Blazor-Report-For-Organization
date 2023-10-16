@@ -16,25 +16,92 @@ using PowerBIBlazor.Models;
 using Microsoft.PowerBI.Api;
 using Microsoft.PowerBI.Api.Models;
 using Microsoft.Rest;
+
 namespace PowerBIBlazor
 {
     public partial class PowerBIService
     {
         [Inject]
-        protected IConfiguration Configuration {get; set;}
-
+        protected IConfiguration Configuration { get; set; }
 
         private readonly HttpClient httpClient;
 
-        private OAuthResponse oauthResponse;
+        // protected OAuthResponse OauthResponse { get; set; }
         private readonly NavigationManager navigationManager;
         private readonly HttpClient server;
+        private readonly string clientId;
+        private readonly string clientSecret;
+        private readonly string workspaceId;
+        private readonly string reportId;
+        private readonly string powerBiApiUrl;
 
-        public async Task<OAuthResponse> GetToken()
+        public PowerBIService(
+            NavigationManager navigationManager,
+            IHttpClientFactory httpClientFactory,
+            IConfiguration configuration
+        )
         {
-            if (oauthResponse != null && oauthResponse.ExpiresAt > DateTime.UtcNow)
+            this.httpClient = httpClientFactory.CreateClient("PowerBI");
+            this.navigationManager = navigationManager;
+            this.server = httpClientFactory.CreateClient("PowerBIBlazor");
+            this.server.BaseAddress = new Uri(navigationManager.BaseUri);
+
+            // Ambil nilai dari appsettings.json
+            clientId = configuration["PowerBI:ClientId"];
+            clientSecret = configuration["PowerBI:ClientSecret"];
+            workspaceId = configuration["Report:WorkspaceId"];
+            reportId = configuration["Report:ReportId"];
+            powerBiApiUrl = configuration["PowerBI:Url"];
+        }
+
+        // public async Task<OAuthResponse> GetToken()
+        // {
+        //     if (OauthResponse != null && OauthResponse.ExpiresAt > DateTime.UtcNow)
+        //     {
+        //         return OauthResponse;
+        //     }
+
+        //     var request = new HttpRequestMessage(HttpMethod.Post, "api/oauth/power-b-i/token");
+
+        //     request.SetBrowserRequestCredentials(BrowserRequestCredentials.Include);
+
+        //     var response = await server.SendAsync(request);
+
+        //     if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+        //     {
+        //         navigationManager.NavigateTo(
+        //             $"api/oauth/power-b-i/authorize?redirectUrl={navigationManager.Uri}",
+        //             true
+        //         );
+        //     }
+        //     else if (response.IsSuccessStatusCode)
+        //     {
+        //         OauthResponse = await response.Content.ReadFromJsonAsync<OAuthResponse>();
+
+        //         if (!OauthResponse.IsSuccess)
+        //         {
+        //             throw new Exception($"Unable to get token: {OauthResponse.Error}");
+        //         }
+        //     }
+
+        //     return OauthResponse;
+        // }
+
+        // private async Task AuthorizeRequest(HttpRequestMessage request)
+        // {
+        //     var token = await GetToken();
+        //     request.Headers.Authorization = new AuthenticationHeaderValue(
+        //         "Bearer",
+        //         token?.AccessToken
+        //     );
+        // }
+
+        public async Task<EmbeddedReportViewModel> GetEmbedTokenAsync()
+        {
+            OAuthResponse OauthResponse = new();
+            if (OauthResponse != null && OauthResponse.ExpiresAt > DateTime.UtcNow)
             {
-                return oauthResponse;
+                return null;
             }
 
             var request = new HttpRequestMessage(HttpMethod.Post, "api/oauth/power-b-i/token");
@@ -45,89 +112,68 @@ namespace PowerBIBlazor
 
             if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
             {
-                navigationManager.NavigateTo($"api/oauth/power-b-i/authorize?redirectUrl={navigationManager.Uri}", true);
+                navigationManager.NavigateTo(
+                    $"api/oauth/power-b-i/authorize?redirectUrl={navigationManager.Uri}",
+                    true
+                );
             }
             else if (response.IsSuccessStatusCode)
             {
-                oauthResponse = await response.Content.ReadFromJsonAsync<OAuthResponse>();
+                OauthResponse = await response.Content.ReadFromJsonAsync<OAuthResponse>();
 
-                if (!oauthResponse.IsSuccess)
+                if (!OauthResponse.IsSuccess)
                 {
-                    throw new Exception($"Unable to get token: {oauthResponse.Error}");
+                    throw new Exception($"Unable to get token: {OauthResponse.Error}");
                 }
             }
 
-            return oauthResponse;
-        }
-
-        private readonly string clientId ;
-        private readonly string clientSecret ;
-        private readonly string workspaceId ;
-        private readonly string reportId;
-        private readonly string powerBiApiUrl;
-
-        public PowerBIService(NavigationManager navigationManager, IHttpClientFactory httpClientFactory,  IConfiguration configuration)
-        {
-            this.httpClient = httpClientFactory.CreateClient("PowerBI");
-            this.navigationManager = navigationManager;
-            this.server = httpClientFactory.CreateClient("PowerBIBlazor");
-            this.server.BaseAddress = new Uri(navigationManager.BaseUri);
+            using var client = new PowerBIClient(
+                new Uri(powerBiApiUrl),
+                new TokenCredentials(OauthResponse.AccessToken, "Bearer")
+            );
             
-             // Ambil nilai dari appsettings.json
-            clientId = configuration["PowerBI:ClientId"];
-            clientSecret = configuration["PowerBI:ClientSecret"];
-            workspaceId = configuration["Report:WorkspaceId"];
-            reportId = configuration["Report:ReportId"];
-            powerBiApiUrl = configuration["PowerBI:Url"];
-        }
+            Report report;
 
-        private async Task AuthorizeRequest(HttpRequestMessage request)
-        {
-            var token = await GetToken();
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token?.AccessToken);
-        }
-
-
-        
-        public async Task<EmbeddedReportViewModel> GetEmbedTokenAsync()
-        {
-            var token = await GetToken();
-
-            using (var client = new PowerBIClient(new Uri(powerBiApiUrl), new TokenCredentials(token?.AccessToken, "Bearer")))
+            // Settings' workspace ID is not empty
+            if (!string.IsNullOrEmpty(workspaceId))
             {
-                Report report;
-
-                // Settings' workspace ID is not empty
-                if (!string.IsNullOrEmpty(workspaceId))
-                {
-                    // Gets a report from the workspace.
-                    report = GetReportFromWorkspace(client, workspaceId, reportId);
-                }
-                // Settings' report and workspace Ids are empty, retrieves the user's first report.
-                else if (string.IsNullOrEmpty(reportId))
-                {
-                    report = client.Reports.GetReports().Value.FirstOrDefault();
-                    AppendErrorIfReportNull(report, "No reports found. Please specify the target report ID and workspace in the applications settings.");
-                }
-                // Settings contains report ID. (no workspace ID)
-                else
-                {
-                    var reportGuId = new Guid(reportId);
-                    report = client.Reports.GetReports().Value.FirstOrDefault(r => r.Id == reportGuId);
-                    AppendErrorIfReportNull(report, $"Report with ID: '{reportId}' not found. Please check the report ID. For reports within a workspace with a workspace ID, add the workspace ID to the application's settings");
-                }
-                var reportViewModel = new EmbeddedReportViewModel(
-                    Id : report?.Id.ToString(),
-                    Name : report?.Name,
-                    EmbedUrl : report?.EmbedUrl,
-                    Token : oauthResponse?.AccessToken
-                );
-                
-                return reportViewModel;
+                // Gets a report from the workspace.
+                report = GetReportFromWorkspace(client, workspaceId, reportId);
             }
+            // Settings' report and workspace Ids are empty, retrieves the user's first report.
+            else if (string.IsNullOrEmpty(reportId))
+            {
+                report = client.Reports.GetReports().Value.FirstOrDefault();
+                AppendErrorIfReportNull(
+                    report,
+                    "No reports found. Please specify the target report ID and workspace in the applications settings."
+                );
+            }
+            // Settings contains report ID. (no workspace ID)
+            else
+            {
+                var reportGuId = new Guid(reportId);
+                report = client.Reports.GetReports().Value.FirstOrDefault(r => r.Id == reportGuId);
+                AppendErrorIfReportNull(
+                    report,
+                    $"Report with ID: '{reportId}' not found. Please check the report ID. For reports within a workspace with a workspace ID, add the workspace ID to the application's settings"
+                );
+            }
+            var reportViewModel = new EmbeddedReportViewModel(
+                Id: report?.Id.ToString(),
+                Name: report?.Name,
+                EmbedUrl: report?.EmbedUrl,
+                Token: OauthResponse?.AccessToken
+            );
+
+            return reportViewModel;
         }
 
-        private Report GetReportFromWorkspace(PowerBIClient client, string WorkspaceId, string reportId)
+        private Report GetReportFromWorkspace(
+            PowerBIClient client,
+            string WorkspaceId,
+            string reportId
+        )
         {
             // Gets the workspace by WorkspaceId.
             var workspaces = client.Groups.GetGroups();
@@ -137,19 +183,20 @@ namespace PowerBIBlazor
 
             // No workspace with the workspace ID was found.
             //if (sourceWorkspace == null)
-           // {
-             //   errorLabel.Text = $"Workspace with id: '{WorkspaceId}' not found. Please validate the provided workspace ID.";
-               // return null;
+            // {
+            //   errorLabel.Text = $"Workspace with id: '{WorkspaceId}' not found. Please validate the provided workspace ID.";
+            // return null;
             //}
 
             Report report = null;
             if (string.IsNullOrEmpty(reportId))
             {
                 // Get the first report in the workspace.
-                report = client.Reports.GetReportsInGroup(sourceWorkspace.Id).Value.FirstOrDefault();
+                report = client.Reports
+                    .GetReportsInGroup(sourceWorkspace.Id)
+                    .Value.FirstOrDefault();
                 AppendErrorIfReportNull(report, "Workspace doesn't contain any reports.");
             }
-
             else
             {
                 try
@@ -157,12 +204,7 @@ namespace PowerBIBlazor
                     // retrieve a report by the workspace ID and report ID.
                     report = client.Reports.GetReportInGroup(workspaceGuId, reportGuId);
                 }
-
-                catch(HttpOperationException)
-                {
-                   
-
-                }
+                catch (HttpOperationException) { }
             }
 
             return report;
@@ -170,10 +212,7 @@ namespace PowerBIBlazor
 
         private void AppendErrorIfReportNull(Report report, string errorMessage)
         {
-            if (report == null)
-            {
-                
-            }
+            if (report == null) { }
         }
     }
 }

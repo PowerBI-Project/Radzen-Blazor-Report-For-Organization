@@ -33,10 +33,6 @@
       "PackagePath": "staticwebassets\\js\\powerbi-embed.js"
     },
     {
-      "Id": "C:\\Users\\yahya\\Videos\\PowerBIRadzenBlazor\\wwwroot\\js\\powerbi-embed.js.js",
-      "PackagePath": "staticwebassets\\js\\powerbi-embed.js.js"
-    },
-    {
       "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.PowerBIBlazor.Microsoft.AspNetCore.StaticWebAssets.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
     },

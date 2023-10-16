@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "4fxy9BnTh9b9o3brd7rnttkqt5EYzkDQdHbRqnudEtk=",
+  "Hash": "EXduUpjq8wXTRmGDGme7qF1Ndo/CGJR4AfEpn8zrlak=",
   "Source": "PowerBIBlazor",
   "BasePath": "_content/PowerBIBlazor",
   "Mode": "Default",
@@ -712,23 +712,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\powerbi-embed.js"
-    },
-    {
-      "Identity": "C:\\Users\\yahya\\Videos\\PowerBIRadzenBlazor\\wwwroot\\js\\powerbi-embed.js.js",
-      "SourceId": "PowerBIBlazor",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\yahya\\Videos\\PowerBIRadzenBlazor\\wwwroot\\",
-      "BasePath": "_content/PowerBIBlazor",
-      "RelativePath": "js/powerbi-embed.js.js",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\powerbi-embed.js.js"
     }
   ]
 }
