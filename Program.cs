@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Radzen;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -26,6 +27,11 @@ builder.Services.AddSession(options =>
     options.IdleTimeout = TimeSpan.FromSeconds(10);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
+});
+builder.Services.AddScoped<PowerBIBlazor.cimut_dbService>();
+builder.Services.AddDbContext<PowerBIBlazor.Data.cimut_dbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("cimut_dbConnection"));
 });
 var app = builder.Build();
 // Configure the HTTP request pipeline.

@@ -1,0 +1,113 @@
+@page "/data-informasi-penduduks"
+
+<PageTitle>DataInformasiPenduduks</PageTitle>
+<RadzenStack>
+    <RadzenRow AlignItems="AlignItems.Center">
+        <RadzenColumn Size="12" SizeMD="6">
+            <RadzenText Text="DataInformasiPenduduks" TextStyle="TextStyle.H3" TagName="TagName.H1" style="margin: 0" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="6">
+            <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.End" Gap="0.5rem">
+                <RadzenSplitButton Icon="get_app" Text="Export" Click="@ExportClick" Variant="Variant.Flat" Shade="Shade.Lighter">
+                    <RadzenSplitButtonItem Text="Excel" Value="xlsx" />
+                    <RadzenSplitButtonItem Text="CSV" Value="csv" />
+                </RadzenSplitButton>
+                <RadzenButton Icon="add_circle_outline" Text="Add" Click="@AddButtonClick" Variant="Variant.Flat" />
+            </RadzenStack>
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenTextBox Placeholder="Search ..." style="display: block; width: 100%" @oninput="@Search" />
+    <RadzenRow>
+      <RadzenColumn SizeMD=12>
+        <RadzenDataGrid @ref="grid0" ColumnWidth="200px"  AllowFiltering="true" FilterMode="FilterMode.Advanced" AllowPaging="true" AllowSorting="true" ShowPagingSummary="true" PageSizeOptions=@(new int[]{5, 10, 20, 30})
+            Data="@dataInformasiPenduduks"    TItem="PowerBIBlazor.Models.cimut_db.DataInformasiPenduduk" RowDoubleClick="@EditRow" >
+            <Columns>
+                <RadzenDataGridColumn TItem="PowerBIBlazor.Models.cimut_db.DataInformasiPenduduk" Property="Id" Title="Id">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="PowerBIBlazor.Models.cimut_db.DataInformasiPenduduk" Property="NIKNumber" Title="N I K Number">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="PowerBIBlazor.Models.cimut_db.DataInformasiPenduduk" Property="KKNumber" Title="K K Number">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="PowerBIBlazor.Models.cimut_db.DataInformasiPenduduk" Property="Address" Title="Address">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="PowerBIBlazor.Models.cimut_db.DataInformasiPenduduk" Property="RTId" Title="R T Id">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="PowerBIBlazor.Models.cimut_db.DataInformasiPenduduk" Property="RWId" Title="R W Id">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="PowerBIBlazor.Models.cimut_db.DataInformasiPenduduk" Property="PostalCode" Title="Postal Code">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="PowerBIBlazor.Models.cimut_db.DataInformasiPenduduk" Property="KecamatanId" Title="Kecamatan Id">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="PowerBIBlazor.Models.cimut_db.DataInformasiPenduduk" Property="KelurahanId" Title="Kelurahan Id">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="PowerBIBlazor.Models.cimut_db.DataInformasiPenduduk" Property="CityId" Title="City Id">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="PowerBIBlazor.Models.cimut_db.DataInformasiPenduduk" Property="ProvinceId" Title="Province Id">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="PowerBIBlazor.Models.cimut_db.DataInformasiPenduduk" Property="GenderId" Title="Gender Id">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="PowerBIBlazor.Models.cimut_db.DataInformasiPenduduk" Property="PlaceOfBirth" Title="Place Of Birth">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="PowerBIBlazor.Models.cimut_db.DataInformasiPenduduk" Property="DateOfBirth" Title="Date Of Birth">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="PowerBIBlazor.Models.cimut_db.DataInformasiPenduduk" Property="ReligionId" Title="Religion Id">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="PowerBIBlazor.Models.cimut_db.DataInformasiPenduduk" Property="EducationId" Title="Education Id">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="PowerBIBlazor.Models.cimut_db.DataInformasiPenduduk" Property="Occupation" Title="Occupation">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="PowerBIBlazor.Models.cimut_db.DataInformasiPenduduk" Property="MaritalStatusId" Title="Marital Status Id">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="PowerBIBlazor.Models.cimut_db.DataInformasiPenduduk" Property="RelationshipStatusId" Title="Relationship Status Id">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="PowerBIBlazor.Models.cimut_db.DataInformasiPenduduk" Property="Nationality" Title="Nationality">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="PowerBIBlazor.Models.cimut_db.DataInformasiPenduduk" Property="PassportNumber" Title="Passport Number">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="PowerBIBlazor.Models.cimut_db.DataInformasiPenduduk" Property="KITASNumber" Title="K I T A S Number">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="PowerBIBlazor.Models.cimut_db.DataInformasiPenduduk" Property="FatherName" Title="Father Name">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="PowerBIBlazor.Models.cimut_db.DataInformasiPenduduk" Property="MotherName" Title="Mother Name">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="PowerBIBlazor.Models.cimut_db.DataInformasiPenduduk" Property="NIKFilePath" Title="N I K File Path">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="PowerBIBlazor.Models.cimut_db.DataInformasiPenduduk" Property="NIKFileName" Title="N I K File Name">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="PowerBIBlazor.Models.cimut_db.DataInformasiPenduduk" Property="KKFilePath" Title="K K File Path">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="PowerBIBlazor.Models.cimut_db.DataInformasiPenduduk" Property="KKFileName" Title="K K File Name">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="PowerBIBlazor.Models.cimut_db.DataInformasiPenduduk" Property="CreatedBy" Title="Created By">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="PowerBIBlazor.Models.cimut_db.DataInformasiPenduduk" Property="CreatedAt" Title="Created At">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="PowerBIBlazor.Models.cimut_db.DataInformasiPenduduk" Property="UpdatedBy" Title="Updated By">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="PowerBIBlazor.Models.cimut_db.DataInformasiPenduduk" Property="UpdatedAt" Title="Updated At">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="PowerBIBlazor.Models.cimut_db.DataInformasiPenduduk" Property="DeletedBy" Title="Deleted By">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="PowerBIBlazor.Models.cimut_db.DataInformasiPenduduk" Property="DeletedAt" Title="Deleted At">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="PowerBIBlazor.Models.cimut_db.DataInformasiPenduduk" Property="FullName" Title="Full Name">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="PowerBIBlazor.Models.cimut_db.DataInformasiPenduduk" Property="KKFileUrl" Title="K K File Url">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="PowerBIBlazor.Models.cimut_db.DataInformasiPenduduk" Property="NIKFileUrl" Title="N I K File Url">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="PowerBIBlazor.Models.cimut_db.DataInformasiPenduduk" Filterable="false" Sortable="false" Width="70px" TextAlign="TextAlign.Center">
+                    <Template Context="dataInformasiPenduduk">
+
+                        <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Size="ButtonSize.Medium"
+                            Shade="Shade.Lighter" Variant="Variant.Flat"
+                            Click=@(args => GridDeleteButtonClick(args, dataInformasiPenduduk)) @onclick:stopPropagation="true" />
+                    </Template>
+                </RadzenDataGridColumn>
+            </Columns>
+
+        </RadzenDataGrid>
+
+    </RadzenColumn>
+  </RadzenRow>
+</RadzenStack>
