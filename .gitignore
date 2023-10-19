@@ -1,0 +1,8 @@
+# Mengabaikan file JSON
+*.json
+
+# Mengabaikan folder bin
+/bin/
+
+# Mengabaikan folder obj
+/obj/
