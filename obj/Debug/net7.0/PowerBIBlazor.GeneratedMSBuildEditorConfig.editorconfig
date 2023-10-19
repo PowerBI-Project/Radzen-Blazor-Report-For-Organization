@@ -9,49 +9,49 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = PowerBIBlazor
 build_property.RootNamespace = PowerBIBlazor
-build_property.ProjectDir = c:\Users\yahya\Videos\PowerBIRadzenBlazor\
+build_property.ProjectDir = C:\Users\yahya\Videos\PowerBIRadzenBlazor\
 build_property.RazorLangVersion = 7.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = c:\Users\yahya\Videos\PowerBIRadzenBlazor
+build_property.MSBuildProjectDirectory = C:\Users\yahya\Videos\PowerBIRadzenBlazor
 build_property._RazorSourceGeneratorDebug = 
 
-[c:/Users/yahya/Videos/PowerBIRadzenBlazor/App.razor]
+[C:/Users/yahya/Videos/PowerBIRadzenBlazor/App.razor]
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/yahya/Videos/PowerBIRadzenBlazor/Pages/AddDataInformasiPenduduk.razor]
+[C:/Users/yahya/Videos/PowerBIRadzenBlazor/Pages/AddDataInformasiPenduduk.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRkRGF0YUluZm9ybWFzaVBlbmR1ZHVrLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/yahya/Videos/PowerBIRadzenBlazor/Pages/DataInformasiPenduduks.razor]
+[C:/Users/yahya/Videos/PowerBIRadzenBlazor/Pages/DataInformasiPenduduks.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGF0YUluZm9ybWFzaVBlbmR1ZHVrcy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/yahya/Videos/PowerBIRadzenBlazor/Pages/EditDataInformasiPenduduk.razor]
+[C:/Users/yahya/Videos/PowerBIRadzenBlazor/Pages/EditDataInformasiPenduduk.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRWRpdERhdGFJbmZvcm1hc2lQZW5kdWR1ay5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/yahya/Videos/PowerBIRadzenBlazor/Pages/Index.razor]
+[C:/Users/yahya/Videos/PowerBIRadzenBlazor/Pages/Index.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/yahya/Videos/PowerBIRadzenBlazor/Pages/PowerBIReport.razor]
+[C:/Users/yahya/Videos/PowerBIRadzenBlazor/Pages/PowerBIReport.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUG93ZXJCSVJlcG9ydC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/yahya/Videos/PowerBIRadzenBlazor/Pages/TokenAD.razor]
+[C:/Users/yahya/Videos/PowerBIRadzenBlazor/Pages/TokenAD.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVG9rZW5BRC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/yahya/Videos/PowerBIRadzenBlazor/Shared/MainLayout.razor]
+[C:/Users/yahya/Videos/PowerBIRadzenBlazor/Shared/MainLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE1haW5MYXlvdXQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/yahya/Videos/PowerBIRadzenBlazor/_Imports.razor]
+[C:/Users/yahya/Videos/PowerBIRadzenBlazor/_Imports.razor]
 build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/yahya/Videos/PowerBIRadzenBlazor/Pages/_Host.cshtml]
+[C:/Users/yahya/Videos/PowerBIRadzenBlazor/Pages/_Host.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX0hvc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
